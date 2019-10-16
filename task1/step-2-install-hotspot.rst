@@ -129,7 +129,11 @@ sudo nano /etc/default/hostapd
 
 Find the line with #DAEMON_CONF, and replace it with this:
 
-DAEMON_CONF="/etc/hostapd/hostapd.conf"
+*DAEMON_CONF="/etc/hostapd/hostapd.conf"*
+
+Set debug log
+
+*DAEMON_OPTS="-dd -t -f /home/pi/hostapd.log"*
 
 Start it up
 -----------
