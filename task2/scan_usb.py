@@ -1,9 +1,14 @@
-import pyshark
+import serial
 
-capture = pyshark.LiveCapture(interface='/dev/usbmon2')
-capture.sniff(timeout=50)
 
-print(capture)
-
-for packet in capture.sniff_continuously(packet_count=5):
-    print(packet)
+try:
+    usb2serial_port = serial.Serial('/dev/ttyUSB0')
+    while True:
+        raw = usb2serial_port.read()
+        print(raw)
+except KeyboardInterrupt as e:
+    print("Ctrl-C pressed")
+except Exception as e:
+    print(e)
+finally:
+    print("Bye!")
