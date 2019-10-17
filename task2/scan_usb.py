@@ -6,7 +6,7 @@ buffer_ = b""
 
 
 def check_buffer(byte_data):
-    searching = r"www\.google\.com\/v2\/[a-zA-Z0-9]+\/w\?d=[0-9,-]+"
+    searching = r"www\.google\.com\/v2\/[a-zA-Z0-9]+\/w\?d=(-?[0-9]+,){10}(-?[0-9]+)"
     if len(byte_data) < len(searching):
         return byte_data
     m = re.search(searching, byte_data.decode("UTF-8"))
