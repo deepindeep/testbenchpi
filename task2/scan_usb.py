@@ -28,7 +28,3 @@ try:
 except KeyboardInterrupt as e:
     print("Ctrl-C pressed")
     print("Bye!")
-# except Exception as e:
-#    print(e)
-# finally:
-#    print("Bye!")
