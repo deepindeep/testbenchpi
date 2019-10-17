@@ -15,6 +15,7 @@ def check_buffer(byte_data):
         return b""
     if len(byte_data) >= 200:
         return b""
+    return byte_data
 
 
 try:
