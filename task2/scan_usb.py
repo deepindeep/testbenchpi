@@ -1,15 +1,17 @@
 import serial
+import re
 
 port_name = "/dev/ttyUSB0"
 buffer_ = b""
 
 
 def check_buffer(byte_data):
-    searching = "www.google.com"
+    searching = r"www\.google\.com\/v2\/[a-zA-Z0-9]+\/w\?d=[0-9,-]+"
     if len(byte_data) < len(searching):
         return byte_data
-    if searching in byte_data.decode("UTF-8"):
-        print(searching)    # bingo!
+    m = re.search(searching, byte_data.decode("UTF-8"))
+    if m:
+        print(m.group())    # bingo!
         return b""
     if len(byte_data) >= 200:
         return b""
