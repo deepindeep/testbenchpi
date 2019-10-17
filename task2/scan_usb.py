@@ -9,9 +9,10 @@ def check_buffer(byte_data):
     if len(byte_data) < len(searching):
         return byte_data
     if searching in byte_data.decode("UTF-8"):
-        print(searching)
-        byte_data = b""
-    return byte_data
+        print(searching)    # bingo!
+        return b""
+    if len(byte_data) >= 200:
+        return b""
 
 
 try:
@@ -24,7 +25,7 @@ try:
 except KeyboardInterrupt as e:
     print("Ctrl-C pressed")
     print("Bye!")
-#except Exception as e:
+# except Exception as e:
 #    print(e)
-#finally:
+# finally:
 #    print("Bye!")
