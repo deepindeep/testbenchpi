@@ -1,8 +1,10 @@
 import serial
 
+port_name = "/dev/ttyUSB0"
 
 try:
-    usb2serial_port = serial.Serial('/dev/ttyUSB0')
+    print(f"Start scanning {port_name}")
+    usb2serial_port = serial.Serial(port_name)
     while True:
         raw = usb2serial_port.read()
         print(raw)
