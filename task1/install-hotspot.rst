@@ -183,3 +183,13 @@ Associated devices can access the Raspberry Pi access point via its IP address f
 rsync, scp, or ssh.
 
 
+Install libraries for the monitor script.
+------------------------------------------
+
+
+**sudo apt install nmap**
+
+
+**python3 -m pip install python-nmap**
+
+
