@@ -87,13 +87,12 @@ password should not have quotes around them. The passphrase should be between 8 
 To use the 5 GHz band, you can change the operations mode from hw_mode=g to hw_mode=a.
 Possible values for hw_mode are:
 
-*a = IEEE 802.11a (5 GHz)*
+a = IEEE 802.11a (5 GHz)
+b = IEEE 802.11b (2.4 GHz)
+g = IEEE 802.11g (2.4 GHz)
+ad = IEEE 802.11ad (60 GHz)
 
-*b = IEEE 802.11b (2.4 GHz)*
 
-*g = IEEE 802.11g (2.4 GHz)*
-
-*ad = IEEE 802.11ad (60 GHz)*
 
 *interface=wlan0*
 
