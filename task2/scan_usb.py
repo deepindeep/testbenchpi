@@ -1,5 +1,6 @@
 import serial
 import re
+import traceback
 
 port_name = "/dev/ttyUSB0"
 buffer_ = b""
@@ -29,7 +30,7 @@ try:
 except KeyboardInterrupt as e:
     print("Ctrl-C pressed")
 except Exception as e:
-    print(e)
+    traceback.print_exc()
 finally:
     if usb2serial_port is not None:
         usb2serial_port.close()
