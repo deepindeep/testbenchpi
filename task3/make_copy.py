@@ -35,23 +35,27 @@ def main(ss_id, s_id, new_name):
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
-    service = build('sheets', 'v4', credentials=creds)
+    service = build('drive', 'v3', credentials=creds)
 
-    # Call the Sheets API
-    sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=ss_id, range="A1:Z100").execute()
-    values = result.get('values', [])
-    print(values)
+    existed_document = service.files().get(fileId="1ye-WUSqGFvJQ0FwmEnATNekDXOdLLmdooRQLKHGnvzY",
+                                           fields="kind, id, name, mimeType, permissions").execute()
 
-    spreadsheet = {
-        'properties': {
-            'title': new_name
-        }
+    file_metadata = {
+        'name': new_name,
+        'mimeType': existed_document['mimeType']
     }
+    new_file = service.files().create(body=file_metadata, fields="kind, id, name, mimeType, permissions").execute()
 
-    spreadsheet = service.spreadsheets().create(body=spreadsheet,
-                                                fields='spreadsheetId').execute()
-    print('New spreadsheet URL: {0}'.format(SAMPLE_SS_URL.format(spreadsheet.get('spreadsheetId'))))
+    for permission_item in existed_document["permissions"]:
+        if permission_item['role'] == 'owner':
+            continue
+        permission = {
+            'type': permission_item['type'],
+            'emailAddress': permission_item['emailAddress'],
+            'role': permission_item['role']
+        }
+        service.permissions().create(fileId=new_file['id'], body=permission).execute()
+    print('New spreadsheet URL: {0}'.format(SAMPLE_SS_URL.format(new_file.get('id'))))
 
 
 if __name__ == '__main__':
