@@ -50,6 +50,7 @@ def main(ss_id, s_id, new_name):
     for permission_item in existed_document["permissions"]:
         if permission_item['role'] == 'owner':
             continue
+        print(f"permission item : {permission_item}")
         permission = {
             'type': permission_item['type'],
             'emailAddress': permission_item['emailAddress'],
