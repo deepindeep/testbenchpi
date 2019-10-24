@@ -7,7 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 
 SAMPLE_SS_URL = "https://docs.google.com/spreadsheets/d/{0}"
 
