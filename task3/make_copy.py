@@ -52,10 +52,12 @@ def main(ss_id, s_id, new_name):
             continue
         print(f"permission item : {permission_item}")
         permission = {
-            'type': permission_item['type'],
-            'emailAddress': permission_item['emailAddress'],
-            'role': permission_item['role']
+            'type': permission_item.get('type'),
+            'role': permission_item.get('role')
         }
+        if permission_item.get('type') == "user":
+            permission['emailAddress'] = permission_item.get('emailAddress')
+
         service.permissions().create(fileId=new_file['id'], body=permission).execute()
     print('New spreadsheet URL: {0}'.format(SAMPLE_SS_URL.format(new_file.get('id'))))
 
