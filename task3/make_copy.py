@@ -39,11 +39,14 @@ def main(ss_id, s_id, new_name):
 
     print(ss_id)
     existed_document = service.files().get(fileId=ss_id,
-                                           fields="kind, id, name, mimeType, permissions").execute()
+                                           fields="kind, id, name, mimeType, permissions, parents").execute()
+
+    print(existed_document)
 
     file_metadata = {
         'name': new_name,
-        'mimeType': existed_document['mimeType']
+        'mimeType': existed_document['mimeType'],
+        'parents': existed_document['parents']
     }
     new_file = service.files().create(body=file_metadata, fields="kind, id, name, mimeType, permissions").execute()
 
@@ -58,7 +61,7 @@ def main(ss_id, s_id, new_name):
         if permission_item.get('type') == "user":
             permission['emailAddress'] = permission_item.get('emailAddress')
 
-        service.permissions().create(fileId=new_file['id'], body=permission).execute()
+        service.permissions().create(fileId=new_file['id'], body=permission, sendNotificationEmails=False).execute()
     print('New spreadsheet URL: {0}'.format(SAMPLE_SS_URL.format(new_file.get('id'))))
 
 
