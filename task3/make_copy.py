@@ -37,7 +37,7 @@ def main(ss_id, s_id, new_name):
 
     service = build('drive', 'v3', credentials=creds)
 
-    existed_document = service.files().get(fileId="1ye-WUSqGFvJQ0FwmEnATNekDXOdLLmdooRQLKHGnvzY",
+    existed_document = service.files().get(fileId=ss_id,
                                            fields="kind, id, name, mimeType, permissions").execute()
 
     file_metadata = {
