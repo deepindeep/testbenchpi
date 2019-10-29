@@ -61,6 +61,7 @@ def main(ss_id, s_id, new_name):
         if permission_item.get('type') == "user":
             permission['emailAddress'] = permission_item.get('emailAddress')
 
+        # service.permissions().create(fileId=new_file['id'], body=permission, sendNotificationEmails=False).execute()
         service.permissions().create(fileId=new_file['id'], body=permission).execute()
     print('New spreadsheet URL: {0}'.format(SAMPLE_SS_URL.format(new_file.get('id'))))
 
