@@ -1,8 +1,11 @@
 from utils import build_sheet_service, validate_sheet_id
+import sys
 import pytz
+import time
 import datetime
 
 SHEET = "https://docs.google.com/spreadsheets/d/1fsTbXKN-yUrlh4j433ndduyX8xyAdxJ-SlC8XkVw76A/edit#gid=0"
+FAILED = 0
 
 
 def utc_time_stamp_to_utc_datetime(ts):
@@ -34,15 +37,47 @@ def get_data():
     return data
 
 
+def test_data(data):
+    data = [int(i) for i in data[5:]]
+    print(data)
+    return all([5 < data[0] < 100,
+                0 < data[1] < 10,
+                0 < data[2] < 10,
+                5 < data[3] < 10,
+                -10 < data[4] < 60,
+                -10 < data[5] < 60,
+                5 < data[6] < 100,
+                data[7] == 0,
+                data[8] == 0,
+                6 < data[9] < 15])
+
+
 def main():
-    data = get_data()
-    time_zone = data["TimeZone"]
-    lt = data["Localtime"]
-    utc_ts = data["UTC"]
-    utc_dt = utc_time_stamp_to_utc_datetime(utc_ts)
-    utc_dt2 = local_time_zone_to_utc_datetime(lt, time_zone)
-    check = compare_times(utc_dt, utc_dt2)
-    return data
+    global FAILED
+    print("Test has been started.")
+    while True:
+        data = get_data()
+        time_zone = data["TimeZone"]
+        lt = data["Localtime"]
+        utc_dt = local_time_zone_to_utc_datetime(lt, time_zone)
+        check = compare_times(datetime.datetime.utcnow(), utc_dt)
+        if not check:
+            print("Time check failed. No new row.")
+            if FAILED > 0:
+                print("TEST FAILED")
+                sys.exit(1)
+            print("Waiting 6 minutes...")
+            time.sleep(360)
+            FAILED += 1
+        FAILED = 0
+        result = test_data(list(data.values()))
+        if result:
+            print("TEST COMPLETE")
+            print("Waiting 5 minutes...")
+            time.sleep(300)
+        else:
+            print("TEST FAILED")
+            sys.exit(1)
 
 
 if __name__ == "__main__":
