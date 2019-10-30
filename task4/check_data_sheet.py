@@ -3,6 +3,7 @@ import sys
 import pytz
 import time
 import datetime
+import traceback
 
 SHEET = "https://docs.google.com/spreadsheets/d/1fsTbXKN-yUrlh4j433ndduyX8xyAdxJ-SlC8XkVw76A/edit#gid=0"
 FAILED = 0
@@ -81,5 +82,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-    print("Bye!")
+    try:
+        main()
+    except KeyboardInterrupt as f:
+        print("Ctrl-C pressed")
+    except Exception as e:
+        print(e)
+        print(traceback.print_exc())
+    finally:
+        print("Bye!")
